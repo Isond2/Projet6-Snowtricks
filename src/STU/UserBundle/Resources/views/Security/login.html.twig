@@ -1,0 +1,36 @@
+{% extends '::base.html.twig' %}
+{% block title %}Connexion{% endblock %}
+
+{% block login %}
+ <p>Pas encore de compte? <a href="{{ path('fos_user_registration_register') }}">Inscrivez vous</a> :) </p>
+{% endblock %}
+
+
+{% block body %}
+
+{% if app.session.flashBag.has('Utilisateur_annonyme') %}
+        <div class="alert alert-danger">
+            {% for msg in app.session.flashBag.get('Utilisateur_annonyme') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+  {% if error %}
+    <div class="alert alert-danger">{{ error.message }}</div>
+  {% endif %}
+
+<div class="container">
+  <form action="{{ path('fos_user_security_check') }}" method="post">
+    <div class="form-group">    
+      <label for="username">Login :</label>
+      <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" />
+      <label for="password">Mot de passe :</label>
+      <input class="form-control" type="password" id="password" name="_password" />
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Connexion" />
+  </form>
+</div>
+  
+{% endblock %}

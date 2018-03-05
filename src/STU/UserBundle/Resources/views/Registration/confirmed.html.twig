@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+{% block title %}Inscription{% endblock %}
+{% block body %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="container">
+	<p>
+Félicitation , votre compte as bien été enregistré , vous pouvez désormais ajouter des figures , modifier des figures , et ajouter des commentaires !
+	</p>
+	<p class="text_align_center">
+		<a href="{{ path('st_platform_homepage') }}"> Revenir a la page d'acceuil </a>
+	</p>
+</div>
+
+{% endblock %}

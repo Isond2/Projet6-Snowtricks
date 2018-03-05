@@ -1,0 +1,146 @@
+#bodybackground
+{
+	background-color: #F7E0D7;
+}
+
+.text_align_center
+{
+	text-align: center;
+}
+
+.display_none
+{
+	display: none;
+}
+
+
+/*css bandeau haut/header (Snowtricks titre)*/
+#header
+{
+height: 160px;
+background-color: #70D8FA;
+display: flex;
+flex-direction: column;
+text-align: center;
+justify-content: center;
+border-bottom: 10px solid #A6DFF5;
+}
+
+#snowtricks
+{
+	font-family: 'Bungee', cursive;
+	color: #DBDBDB;
+	font-size: 3em;
+	text-shadow: -3px 3px 1px #001569;
+}
+
+#jimmy
+{
+	font-family: 'Lobster', cursive;
+	font-size: 2em;
+	text-shadow: -3px 3px 5px #CED5F5;
+}
+
+
+
+
+
+/*css block login (bandeau bleu)*/
+#block_login
+{
+	text-align: center;
+}
+
+.block_login_padding1
+{
+	padding-bottom: 7px;
+}
+
+.bouton_deco_droite
+{
+	padding-right: 8em;
+}
+
+.finger_point_background
+{
+
+	background-color: #70D8FA;
+	border-radius: 100%;
+	padding: 3px;
+	padding-bottom: 5px;
+}
+
+
+
+
+/*css figure index /page */
+.figure_index
+{
+	background-color: #d8f2ff;
+	border-radius: 7px;
+	padding: 1.2em;
+	margin: 25px;
+	border: 3px solid #70D8FA;
+}
+.titre_figure
+{
+    font-size: 1.5em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+.aa
+{
+	text-align: center;
+}
+
+
+/*css page affichage de figure */
+.figure_show_center
+{
+	text-align: center;
+}
+
+.figure_show_img
+{
+	border: 3px solid #51a2bc;
+	border-radius: 3px;
+	margin :3em;
+}
+
+.figure_show_description
+{
+	background-color: #d8f2ff;
+	padding: 1.5em;
+	margin: 25px;
+	border: 3px solid #70D8FA;
+	text-align: justify;
+
+}
+
+.figure_show_titre
+{
+	margin: 25px ;
+}
+
+
+
+
+/* Commentaires css */
+.comment_user_avatar
+{
+	border: 3px solid black;
+	border-radius: 3px;
+	margin : 1em;
+	float: left;
+	margin-top: -10px;
+}
+
+.commentaires
+{
+	height: 150px;
+	
+}
+

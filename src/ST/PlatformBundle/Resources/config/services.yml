@@ -1,0 +1,7 @@
+services:
+#    st_platform.example:
+#        class: ST\PlatformBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+# Fixtures services
+    ST\PlatformBundle\DataFixtures\ORM\AppFixture:
+        tags: [doctrine.fixture.orm]

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html"; charset="utf-8" />
+        <title>Snowtricks - {% block title %}Acceuil{% endblock %}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  
+
+        <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        {% block stylesheets %}
+            <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+            <link href="{{ asset('css snowtricks/screen.css') }}" type="text/css" rel="stylesheet" />
+        {% endblock %}
+        <link rel="shortcut icon" href="{{ asset('Snowtricks.ico') }}" />
+    </head>
+
+
+
+
+
+
+    <body id="bodybackground">
+
+
+        <header id="header">
+                <a style="text-decoration:none"href="{{ path('st_platform_homepage') }}">
+                    <div id="snowtricks">
+                    Snowtricks
+                    </div>
+                </a>
+                
+                <div id=jimmy>
+                by Jimmy Sweat
+                </div>
+
+        </header>
+
+
+
+
+        <div id="block_login" class="alert alert-primary">
+            {% block login %}
+
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+            Vous êtes connectés en tant que <strong class="bouton_deco_droite">{{ app.user.username }} <i class="em em-100"></i> .</strong> Se déconnecter <span data-toggle="tooltip" data-placement="bottom" title="Pas ici , juste a droite :)"class="finger_point_background"><i class="em em-point_right"></i></span>
+
+            <a href="{{ path('fos_user_security_logout') }}" data-toggle="tooltip" data-placement="bottom" title="Se déconnecter" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-off"></span></a>
+
+            {% else %}
+            <p>Bienvenue sur Snowtricks , le site meilleur communautaire de snowboard !</p>
+            <p class="block_login_padding1">Inscrivez vous ou connectez vous pour pouvoir commenter les différentes figures , ou mettre en ligne de nouvelles figues ! </p>
+            <a href="{{ path('fos_user_security_login') }}" class="btn btn-sm btn-primary">Se connecter</a>
+            <a href="{{ path('fos_user_registration_register') }}" class="btn btn-sm btn-primary">S'inscrire</a>
+            {% endif %}
+
+            {% endblock %}
+        </div>
+
+            {% block flash %}
+            {% endblock %}
+
+        <div>
+            {% block body %}
+            {% endblock %}
+        </div>
+
+        <div>
+            {% block sidebar %}{% endblock %}
+        </div>
+    </body>
+    </html>

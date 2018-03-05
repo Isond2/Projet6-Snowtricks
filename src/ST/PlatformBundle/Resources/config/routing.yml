@@ -1,0 +1,33 @@
+st_platform_homepage:
+    path:     /
+    defaults: { _controller: STPlatformBundle:Page:index }
+
+st_platform_figure:
+    path:  /show/{slug}
+    defaults: { _controller: STPlatformBundle:Figure:show }
+    requirements:
+        
+        _method:  GET
+        
+
+st_platform_add:
+    path:      /add
+    defaults:
+        _controller: STPlatformBundle:Figure:add
+
+st_platform_modif:
+    path:      /modif/{id}
+    defaults:
+        _controller: STPlatformBundle:Figure:modif
+
+st_platform_supp:
+    path:      /supp/{id}
+    defaults:
+        _controller: STPlatformBundle:Figure:supp
+
+
+    
+
+
+
+

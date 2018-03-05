@@ -1,0 +1,24 @@
+{% for comments in pagination %}
+
+
+<div class="commentaires">
+    <article class="comment {{ cycle(['odd', 'even'], loop.index0) }}" id="comment-{{ comments.id }}">
+	<img class="comment_user_avatar" src="{{ asset(comments.user.image.webPath) }}"
+	            alt="{{ comments.user.image.alt }}" height="100" Maxwidth="100"/>
+
+        <header class="comment_align_img">
+
+            <p><span class="highlight">{{ comments.user.username }}</span> commented <time datetime="{{ comments.created|date('c') }}">{{ comments.created|date('l, F j, Y') }}</time></p>
+        </header>
+        <p>
+            {{ comments.comment }}</p>
+    </article>
+</div>
+
+
+
+
+
+{% else %}
+    <p>Aucun commentaire n'a été posté pour le moment ... Soyez le premier !</p>
+{% endfor %}

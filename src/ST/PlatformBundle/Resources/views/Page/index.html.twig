@@ -1,0 +1,32 @@
+{% extends 'STPlatformBundle:Page:layout.html.twig' %}
+
+{% block body %}
+
+
+    {% for figure in figure %}
+<div class="figure_index">
+
+
+    	<a href="{{ path('st_platform_figure', { 'slug': figure.slug }) }}"><span class="titre_figure">{{ figure.nom|title }}</span></a>
+
+    		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+    	<a href="{{ path('st_platform_modif', { 'id': figure.id }) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="bottom" title="Modifier la figure."><span class="glyphicon glyphicon-pencil"></span></a>
+
+    	<a href="{{ path('st_platform_supp', { 'id': figure.id }) }}" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="bottom" title="Supprimer la figure."><span class="glyphicon glyphicon-trash"></span></a>
+
+    		{% else %}
+			{% endif %}
+
+    	<p>{{ figure.description(100) }}</p>
+    
+</div>
+    {% else %}
+
+
+
+        <p>Le site ne contien encore aucune figure <i class="em em-frowning"></i></p>
+
+    {% endfor %}
+
+{% endblock %}

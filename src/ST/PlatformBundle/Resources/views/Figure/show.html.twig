@@ -1,0 +1,86 @@
+{% extends 'STPlatformBundle:Page:layout.html.twig' %}
+
+{% block title %}{{ Figure.nom }}{% endblock %}
+
+{% block body %}
+<div class="container figure_show">
+    <article class="blog">
+        <div class="figure_show_center">
+
+            <header class="display-3 figure_show_titre">
+               {{ Figure.nom | upper }}
+            </header>
+
+            <div class="display-4">
+                Diffuculté : {{ Figure.groupe }}
+            </div>
+
+            <div class="figure_show_description">
+                {{ Figure.description }}
+            </div>
+
+        {% for image in Figure.image %}
+        <div>
+        <img class="figure_show_img" src="{{ asset(image.webPath) }}"
+            alt="{{ image.alt }}" height="475"/>
+        </div>
+        {% endfor %}
+           
+
+        
+        <div class="figure_show_center">
+            
+            {{ videaaao|raw }}
+            
+        </div>
+    </article>
+</div>
+
+<div class="container figure_show_comments">
+    <section class="comments" id="comments">
+        {# .. #}
+
+        <h3>Espace commentaires</h3>
+
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <form>
+    <div>
+    {{ form(form) }}
+    </div>
+</form>
+        {% else %}
+            <p> <a href={{ path('fos_user_security_login')}}> Connectez vous</a> pour pouvoir ajouter un commentaire !</p>
+        {% endif %}
+
+    </section>
+
+     <section class="comments" id="comments">
+        <section class="previous-comments">
+            <h3>Derniers commentaires</h3>
+            <br/>
+
+
+
+            {% include 'STPlatformBundle:Comment:index.html.twig' with { 'comments': comments } %}
+
+
+
+            <div class="row">
+    <div class="row col-md-12">
+            <nav class="navbar navbar-light navbar-right">
+                {{ knp_pagination_render(pagination) }}
+            </nav>
+        </div>
+</div>
+
+
+
+        </section>
+    </section>
+</div>
+
+{% block sidebar %}
+{% endblock %}
+
+    
+{% endblock %}
