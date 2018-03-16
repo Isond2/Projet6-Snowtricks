@@ -63,6 +63,7 @@ class Comment
         $this->figure = $figure;        
         $this->setCreated(new \DateTime());
         $this->setApproved(true);
+        return $this;
     }
 
 

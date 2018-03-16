@@ -4,6 +4,7 @@ namespace STU\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use ST\PlatformBundle\Entity\Avatar;
 
 /**
  * @ORM\Table(name="st_user")
@@ -11,39 +12,39 @@ use FOS\UserBundle\Model\User as BaseUser;
  */
 class User extends BaseUser
 {
-  /**
+  /** 
    * @ORM\Column(name="id", type="integer")
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
   protected $id;
 
-  /**
-  	* @ORM\OneToOne(targetEntity="ST\PlatformBundle\Entity\Image", cascade={"persist", "remove"})
+    /**
+  	* @ORM\OneToOne(targetEntity="ST\PlatformBundle\Entity\Avatar", cascade={"persist", "remove"})
     */
-    private $image;
+    private $avatar;
 
     /**
-     * Set image
+     * Set avatar
      *
-     * @param string $image
+     * @param string $avatar
      *
      * @return Figure
      */
-    public function setImage($image)
+    public function setAvatar($avatar)
     {
-        $this->image = $image;
+        $this->avatar = $avatar;
 
         return $this;
     }
 
     /**
-     * Get image
+     * Get avatar
      *
      * @return string
      */
-    public function getImage()
+    public function getAvatar()
     {
-        return $this->image;
+        return $this->avatar;
     }
 }

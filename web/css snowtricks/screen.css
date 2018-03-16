@@ -144,3 +144,18 @@ border-bottom: 10px solid #A6DFF5;
 	
 }
 
+
+/*form modif*/
+.marge
+{
+	line-height: 300%;
+}
+
+.align
+{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+
+}
+

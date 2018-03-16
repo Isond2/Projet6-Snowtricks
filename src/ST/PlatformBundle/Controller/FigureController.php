@@ -17,8 +17,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use ST\PlatformBundle\Form\FigureType;
+use ST\PlatformBundle\Form\FigureModifType;
+use ST\PlatformBundle\Form\FigureNewModifType;
 use ST\PlatformBundle\Entity\Image;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class FigureController extends Controller
 {
@@ -28,7 +31,6 @@ class FigureController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $Figure = $em->getRepository('STPlatformBundle:Figure')->findOneBy(array('slug' => $slug));
-
         $vids = $em->getRepository('STPlatformBundle:Video')->findBy(array('figure' => $Figure));
         $img = $em->getRepository('STPlatformBundle:Image')->findBy(array('figure' => $Figure));
 
@@ -53,13 +55,7 @@ class FigureController extends Controller
         $comments = $em->getRepository('STPlatformBundle:Comment')
                    ->getCommentsForFigure($Figure->getId());
 
-     
-          /**
-         * @var $paginator \knp\Component\Pager\Paginator
-         */
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($comments,$request->query->getInt('page',1),10);
-       
+
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
         
         $comment = new Comment($Figure);
@@ -67,14 +63,38 @@ class FigureController extends Controller
         $Figure->addComment($comment);
 
         $form = $this->createForm(CommentType::class, $comment);
-        
-        
-        
+
+        $form1 = $this->createFormBuilder()    
+        ->add('aie', SubmitType::class
+          )
+        ->getForm();
+        ;
+
+      
+
         if ($form->isValid()) {
           $em = $this->getDoctrine()->getManager();
-          $em->persist($comment);
+          $em->persist($Figure);
           $em->flush();
+
         }
+
+        if ($form1->get('aie')->isClicked()) {
+         return $this->redirectToRoute('st_platform_homepage');
+
+        }
+
+
+     
+          /**
+         * @var $paginator \knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($comments,$request->query->getInt('page',1),10);
+       
+
+
+          
           
 
     
@@ -83,6 +103,7 @@ class FigureController extends Controller
            
 
         return $this->render('STPlatformBundle:Figure:show.html.twig', array(
+          'form1' => $form1->createView(),
             'image' => $img,
             'video' => $vids,
             'videaaao'  => $iframe_video,
@@ -93,7 +114,8 @@ class FigureController extends Controller
             'id'        => $id,
             
         ));
-    }
+        }
+    
 
 
 
@@ -108,41 +130,18 @@ class FigureController extends Controller
         {
 
     $Figure = new Figure();
-    $Figure->addImage(new Image($Figure));
-    $Figure->addVideo(new Video($Figure));
-
-    
-
-
+  
     $form = $this->createForm(FigureType::class, $Figure);
 
-     // Si la requête est en POST
     if ($request->isMethod('POST')) {
       $form->handleRequest($request);
 
       if ($form->isValid()) {
-        
-        try{
+
         $em = $this->getDoctrine()->getManager();
         $Figure->setSlug(null);
         $em->persist($Figure);
         $em->flush();
-        $vids = $em->getRepository('STPlatformBundle:Video')->findBy(array('figure' => NULL));
-        foreach ($vids as $video) {
-        $video->setFigure($Figure);
-        $em->persist($Figure);
-        $em->flush();
-        }
-        $img = $em->getRepository('STPlatformBundle:Image')->findBy(array('figure' => NULL));
-        foreach ($img as $image) {
-        $image->setFigure($Figure);
-        $em->persist($Figure);
-        $em->flush();
-        }
-
-        }
-        catch(Exeption $e)
-        {echo $e;}
 
         $request->getSession()->getFlashBag()->add('notice', 'Votre figure as bien été ajoutée');
 
@@ -186,15 +185,23 @@ class FigureController extends Controller
         $Figure = $em->getRepository('STPlatformBundle:Figure')->find($id);
         $vids = $em->getRepository('STPlatformBundle:Video')->findBy(array('figure' => $Figure));
         $img = $em->getRepository('STPlatformBundle:Image')->findBy(array('figure' => $Figure));
-        $Figure->addImage(new Image($Figure));
-        $Figure->addVideo(new Video($Figure));
 
-        $id = $Figure->getId();
 
         if (!$Figure) 
           {
             throw $this->createNotFoundException('La figure n\'existe pas.');
           }
+
+          $originalVideo = new ArrayCollection();
+          foreach ($Figure->getVideo() as $video) {
+              $originalVideo->add($video);
+          }
+
+          $originalImage = new ArrayCollection();
+          foreach ($Figure->getImage() as $image) {
+              $originalImage->add($image);
+          }
+
 
     $form = $this->createForm(FigureType::class, $Figure);
 
@@ -203,6 +210,20 @@ class FigureController extends Controller
       $form->handleRequest($request);
 
       if ($form->isValid()) {
+         foreach ($originalVideo as $video) {
+            if (false === $Figure->getVideo ()->contains($video)) {
+                $video->getFigure()->removeVideo($video);
+                $em->remove($video);
+              }
+            }
+
+          foreach ($originalImage as $image) {
+            if (false === $Figure->getImage ()->contains($image)) {
+                $image->getFigure()->removeImage($image);
+                $em->remove($image);
+              }
+            }
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($Figure);
         $em->flush();
@@ -216,7 +237,7 @@ class FigureController extends Controller
       'form' => $form->createView(),
       'image' => $img,
       'video' => $vids,
-      'Figure'      => $Figure,
+      'Figure' => $Figure,
     ));
     }
 
@@ -289,46 +310,4 @@ class FigureController extends Controller
 
 
 
-
-    /**
-     * Delete Form generation.
-     *
-     * @Route("/suppvid/{id}/{vid_id}", name="videoDelete")
-     * @Method("POST")
-     */
-  public function suppvidAction(Request $request, $id, $vid_id)
-  {
-    $securityContext = $this->container->get('security.authorization_checker');
-      if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) 
-        {
-    $em = $this->getDoctrine()->getManager();
-
-    $figure = $em->getRepository('STPlatformBundle:Figure')->find($id);
-    $vids = $em->getRepository('STPlatformBundle:Video')->findBy(array('id' => $vid_id));
-
-    if (null === $figure) {
-      throw new NotFoundHttpException("La figure d'id ".$id." n'existe pas.");
-    }
-
-    // On crée un formulaire vide, qui ne contiendra que le champ CSRF
-    // Cela permet de protéger la suppression d'annonce contre cette faille
-    $form = $this->get('form.factory')->create();
-
-    if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-      $em->remove($figure);
-      $em->flush();
-
-      $request->getSession()->getFlashBag()->add('notice', "La figure a bien été supprimée.");
-
-      return $this->redirectToRoute('st_platform_modif', array('id' => $figure->getId()));
-    }
-    
-    return $this->render('STPlatformBundle:Figure:suppvid.html.twig', array(
-      'figure' => $figure,
-      'form'   => $form->createView(),
-      'video' => $vids,
-    ));
-
-}
-}
 }

@@ -210,26 +210,13 @@ class Figure
 
 
 
-    /**
-     * Add Image
-     *
-     * @param \ST\PlatformBundle\Entity\Image $image
-     *
-     * @return Figure
-     */
-    public function addImage(\ST\PlatformBundle\Entity\Image $image)
+    public function addImage(Image $image)
     {
-        $this->image[] = $image;
-
-        return $this;
+        $image->setFigure($this);
+        $this->image->add($image);
     }
 
-    /**
-     * Remove image
-     *
-     * @param \ST\PlatformBundle\Entity\Image $image
-     */
-    public function removeImage(\ST\PlatformBundle\Entity\Image $image)
+    public function removeImage(Image $image)
     {
         $this->image->removeElement($image);
     }
@@ -252,26 +239,13 @@ class Figure
 
 
 
-    /**
-     * Add video
-     *
-     * @param \ST\PlatformBundle\Entity\Comment $video
-     *
-     * @return Figure
-     */
-    public function addVideo(\ST\PlatformBundle\Entity\Video $video)
+    public function addVideo(Video $video)
     {
-        $this->video[] = $video;
-
-        return $this;
+        $video->setFigure($this);
+        $this->video->add($video);
     }
 
-    /**
-     * Remove video
-     *
-     * @param \ST\PlatformBundle\Entity\Comment $video
-     */
-    public function removeVideo(\ST\PlatformBundle\Entity\Video $video)
+    public function removeVideo(Video $video)
     {
         $this->video->removeElement($video);
     }

@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class FigureType extends AbstractType
+class FigureModifType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -29,15 +29,13 @@ class FigureType extends AbstractType
             'Extreme' => 'Extreme')))
 
         ->add('image', CollectionType::class, array(
-            'entry_type' => ImageType::class,'label' => false,
+            'entry_type' => ImageModifType::class,'label' => false,
             'entry_options' => array('label' => false),
             'allow_add' => true,
             'required'     => false,
-            'delete_empty' => true,
-            'by_reference' => false,
             'allow_delete' => true,
             'attr' => array(
-            'class' => 'my-selector',
+            'class' => '',
 
         ),
         ))
@@ -45,15 +43,13 @@ class FigureType extends AbstractType
         
 
         ->add('video', CollectionType::class, array(
-            'entry_type' => VideoType::class, 'label' => false,
+            'entry_type' => VideoModifType::class, 'label' => false,
             'entry_options' => array('label' => false),
             'allow_add' => true,
             'required'     => false,
-            'delete_empty' => true,
-            'by_reference' => false,
             'allow_delete' => true,
             'attr' => array(
-            'class' => 'my-selector',
+            'class' => '',
         ),
         ))
 

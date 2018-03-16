@@ -3,8 +3,8 @@
 
 <div class="commentaires">
     <article class="comment {{ cycle(['odd', 'even'], loop.index0) }}" id="comment-{{ comments.id }}">
-	<img class="comment_user_avatar" src="{{ asset(comments.user.image.webPath) }}"
-	            alt="{{ comments.user.image.alt }}" height="100" Maxwidth="100"/>
+	<img class="comment_user_avatar" src="{{ asset(comments.user.avatar.webPath) }}"
+	            alt="{{ comments.user.avatar.alt }}" height="100" Maxwidth="100"/>
 
         <header class="comment_align_img">
 

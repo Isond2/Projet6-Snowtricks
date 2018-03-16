@@ -40,11 +40,17 @@ class Video
      */
     protected $figure;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $supp;
 
 
-    public function __construct(\ST\PlatformBundle\Entity\Figure $figure = null)
+
+
+    public function __construct()
     {
-        $this->figure = $figure;
+        $this->setSupp(false);
     }
     
     /**
@@ -105,5 +111,29 @@ class Video
     public function getUrl()
     {
         return $this->url;
+    }
+
+        /**
+     * Set supp
+     *
+     * @param boolean $supp
+     *
+     * @return Comment
+     */
+    public function setSupp($supp)
+    {
+        $this->supp = $supp;
+
+        return $this;
+    }
+
+    /**
+     * Get supp
+     *
+     * @return boolean
+     */
+    public function getSupp()
+    {
+        return $this->supp;
     }
 }

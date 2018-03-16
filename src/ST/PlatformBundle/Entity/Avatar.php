@@ -5,13 +5,12 @@ namespace ST\PlatformBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-
 /**
- * @ORM\Table(name="st_image")
+ * @ORM\Table(name="Avatar")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
-class Image
+class Avatar
 {
   /**
    * @ORM\Column(name="id", type="integer")
@@ -33,28 +32,6 @@ class Image
   private $file;
   // On ajoute cet attribut pour y stocker le nom du fichier temporairement
   private $tempFilename;
-
-  /**
-    *   
-    * @ORM\ManyToOne(targetEntity="ST\PlatformBundle\Entity\Figure", inversedBy="image")
-    * @ORM\JoinColumn(name="figure_id", referencedColumnName="id", onDelete="CASCADE")
-    */
-  protected $figure;
-
-  /**
-    * @ORM\Column(type="boolean")
-    */
-  protected $supp;
-
-
-
-  public function __construct(\ST\PlatformBundle\Entity\Figure $figure = null)
-    {
-        $this->figure = $figure;
-        $this->setSupp(false);
-    }
-
-
   /**
    * @ORM\PrePersist()
    * @ORM\PreUpdate()
@@ -116,7 +93,7 @@ class Image
   public function getUploadDir()
   {
     // On retourne le chemin relatif vers l'image pour un navigateur (relatif au répertoire /web donc)
-    return 'uploads/img';
+    return 'uploads/avatar';
   }
   protected function getUploadRootDir()
   {
@@ -185,53 +162,4 @@ class Image
       $this->alt = null;
     }
   }
-
-      /**
-     * Set figure
-     *
-     * @param \ST\PlatformBundle\Entity\Figure $figure
-     *
-     * @return Image
-     */
-    public function setFigure(\ST\PlatformBundle\Entity\Figure $figure = null)
-    {
-        $this->figure = $figure;
-
-        return $this;
-    }
-
-    /**
-     * Get figure
-     *
-     * @return \ST\PlatformBundle\Entity\Figure
-     */
-    public function getFigure()
-    {
-        return $this->figure;
-    }
-
-            /**
-     * Set supp
-     *
-     * @param boolean $supp
-     *
-     * @return Comment
-     */
-    public function setSupp($supp)
-    {
-        $this->supp = $supp;
-
-        return $this;
-    }
-
-    /**
-     * Get supp
-     *
-     * @return boolean
-     */
-    public function getSupp()
-    {
-        return $this->supp;
-    }
-
 }

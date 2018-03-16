@@ -5,6 +5,7 @@
 
 <h3>Modifier une figure</h3>
   {{ form_start(form) }}
+
     {% form_theme form 'jquery.collection.html.twig' %}
 
     <div class="form-group">
@@ -28,9 +29,23 @@
 
 
 
-        <div>
+<div class="row">
+
+        <div class="col-lg-6 col-sm-6 align">
+            {% for image in Figure.image %}
+            <div>
+            <img class="figure_show_img" src="{{ asset(image.webPath) }}"
+                alt="{{ image.alt }}" height="80"/>
+            </div>
+            {% endfor %} 
+        </div>
+
+        <div class="col-lg-6 col-sm-6 marge">
             {{ form_row(form.image) }}
         </div>
+</div>
+
+
  
 
 
@@ -39,6 +54,10 @@
             {{ form_errors(form.video) }}
             {{ form_widget(form.video) }}
     </div>
+
+    
+
+
 
    	<input type="submit" value="Modifier la figure" class="btn btn-primary" />
    	<div class="display_none">{{ form_rest(form) }}</div>
@@ -52,14 +71,15 @@
 
     <script type="text/javascript">
     $('.my-selector').collection({
-            init_with_n_elements: 1,
-            max: 5,
+            add_at_the_end: true,
             allow_up: false,
             allow_down: false,
             add: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span></a>',
             remove: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a>',
         });
     </script>
+
+
 {% endblock %}
 
 
@@ -71,4 +91,11 @@
         <img class="figure_show_img" src="{{ asset(image.webPath) }}"
             alt="{{ image.alt }}" height="100"/>
         </div>
-        {% endfor %} #}
+        {% endfor %} 
+st_platformbundle_figure_image
+
+min: {{ count_vids }},
+min: {{ count_img }},
+        #}
+
+        

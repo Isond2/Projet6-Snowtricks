@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class FigureType extends AbstractType
+class FigureNewModifType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -18,26 +18,14 @@ class FigureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $myEntity = $builder->getForm()->getData();
-
-        $builder->add('nom')
-        ->add('description')
-        ->add('groupe', ChoiceType::class, array(
-            'choices'  => array(
-            'Facile' => 'Facile',
-            'Normal' => 'Normal',
-            'Difficile' => 'Difficile',
-            'Extreme' => 'Extreme')))
-
-        ->add('image', CollectionType::class, array(
+            $builder->add('image', CollectionType::class, array(
             'entry_type' => ImageType::class,'label' => false,
             'entry_options' => array('label' => false),
             'allow_add' => true,
             'required'     => false,
-            'delete_empty' => true,
-            'by_reference' => false,
             'allow_delete' => true,
             'attr' => array(
-            'class' => 'my-selector',
+            'class' => 'my-image',
 
         ),
         ))
@@ -49,15 +37,11 @@ class FigureType extends AbstractType
             'entry_options' => array('label' => false),
             'allow_add' => true,
             'required'     => false,
-            'delete_empty' => true,
-            'by_reference' => false,
             'allow_delete' => true,
             'attr' => array(
-            'class' => 'my-selector',
+            'class' => 'my-video',
         ),
-        ))
-
-        ->add('creer', SubmitType::class);
+        ));
     }/**
      * {@inheritdoc}
      */
