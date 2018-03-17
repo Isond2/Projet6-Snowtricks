@@ -44,46 +44,32 @@ class FigureController extends Controller
         $url_des_videos .=' '.$video->geturl();
         }
         
-
-
         $video = $url_des_videos;
         $embera = new \Embera\Embera();
         $iframe_video = $embera->autoEmbed($video);
         $id = $Figure->getId();
+
 
        
         $comments = $em->getRepository('STPlatformBundle:Comment')
                    ->getCommentsForFigure($Figure->getId());
 
 
+
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
         
         $comment = new Comment($Figure);
         $comment->setUser($user);
+        //$comment->setComment('Bonjour est ce que ça marche ?');
         $Figure->addComment($comment);
 
         $form = $this->createForm(CommentType::class, $comment);
 
-        $form1 = $this->createFormBuilder()    
-        ->add('aie', SubmitType::class
-          )
-        ->getForm();
-        ;
-
-      
-
         if ($form->isValid()) {
           $em = $this->getDoctrine()->getManager();
-          $em->persist($Figure);
+          $em->persist($comment);
           $em->flush();
-
         }
-
-        if ($form1->get('aie')->isClicked()) {
-         return $this->redirectToRoute('st_platform_homepage');
-
-        }
-
 
      
           /**
@@ -91,19 +77,8 @@ class FigureController extends Controller
          */
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate($comments,$request->query->getInt('page',1),10);
-       
-
-
-          
-          
-
-    
-    
-            
-           
-
+        
         return $this->render('STPlatformBundle:Figure:show.html.twig', array(
-          'form1' => $form1->createView(),
             'image' => $img,
             'video' => $vids,
             'videaaao'  => $iframe_video,

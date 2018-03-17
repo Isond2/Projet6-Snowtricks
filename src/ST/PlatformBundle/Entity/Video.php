@@ -40,18 +40,6 @@ class Video
      */
     protected $figure;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $supp;
-
-
-
-
-    public function __construct()
-    {
-        $this->setSupp(false);
-    }
     
     /**
      * Get id
@@ -113,27 +101,4 @@ class Video
         return $this->url;
     }
 
-        /**
-     * Set supp
-     *
-     * @param boolean $supp
-     *
-     * @return Comment
-     */
-    public function setSupp($supp)
-    {
-        $this->supp = $supp;
-
-        return $this;
-    }
-
-    /**
-     * Get supp
-     *
-     * @return boolean
-     */
-    public function getSupp()
-    {
-        return $this->supp;
-    }
 }

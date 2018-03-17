@@ -45,10 +45,7 @@
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <form>
     <div>
-    {{ form(form) }}
-    {{ form_rest(form) }}
-    {{ form_start(form1) }}
-    {{ form_rest(form1) }}
+    {% include 'STPlatformBundle:Comment:form.html.twig' with { 'form': form } %}
     </div>
 </form>
         {% else %}

@@ -1,8 +1,0 @@
-{% extends 'STPlatformBundle::layout.html.twig' %}
-
-{% block title %}Add Comment{% endblock%}
-
-{% block body %}
-    <h1>Add comment for blog post "{{ comment.figure.title }}"</h1>
-    {% include 'STPlatformBundle:Comment:form.html.twig' with { 'form': form } %}
-{% endblock %}

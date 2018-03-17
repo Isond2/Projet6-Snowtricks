@@ -8,7 +8,7 @@
 
         <header class="comment_align_img">
 
-            <p><span class="highlight">{{ comments.user.username }}</span> commented <time datetime="{{ comments.created|date('c') }}">{{ comments.created|date('l, F j, Y') }}</time></p>
+            <p><span class="highlight">{{ comments.user.username }}</span> as laissé un commentaire le <time datetime="{{ comments.created|date('c') }}">{{ comments.created|date('l, F j, Y') }}</time></p>
         </header>
         <p>
             {{ comments.comment }}</p>

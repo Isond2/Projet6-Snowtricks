@@ -41,18 +41,7 @@ class Image
     */
   protected $figure;
 
-  /**
-    * @ORM\Column(type="boolean")
-    */
-  protected $supp;
 
-
-
-  public function __construct(\ST\PlatformBundle\Entity\Figure $figure = null)
-    {
-        $this->figure = $figure;
-        $this->setSupp(false);
-    }
 
 
   /**
@@ -210,28 +199,5 @@ class Image
         return $this->figure;
     }
 
-            /**
-     * Set supp
-     *
-     * @param boolean $supp
-     *
-     * @return Comment
-     */
-    public function setSupp($supp)
-    {
-        $this->supp = $supp;
-
-        return $this;
-    }
-
-    /**
-     * Get supp
-     *
-     * @return boolean
-     */
-    public function getSupp()
-    {
-        return $this->supp;
-    }
 
 }

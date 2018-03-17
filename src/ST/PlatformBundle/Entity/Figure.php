@@ -192,19 +192,6 @@ class Figure
         return $this->image;
     }
 
-    /**
-     * Set gallery
-     *
-     * @param string $gallery
-     *
-     * @return Figure
-     */
-    public function setGallery($gallery)
-    {
-        $this->gallery = $gallery;
-
-        return $this;
-    }
 
 
 
@@ -271,18 +258,9 @@ class Figure
 
 
 
-    /**
-     * Add comment
-     *
-     * @param \ST\PlatformBundle\Entity\Comment $comment
-     *
-     * @return Figure
-     */
-    public function addComment(\ST\PlatformBundle\Entity\Comment $comment)
+    public function addComment(Comment $comment)
     {
-        $this->comments[] = $comment;
-
-        return $this;
+        $this->comments->add($comment);
     }
 
     /**
