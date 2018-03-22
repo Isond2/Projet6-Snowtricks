@@ -22,11 +22,12 @@ use ST\PlatformBundle\Form\FigureNewModifType;
 use ST\PlatformBundle\Entity\Image;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Routing\RequestContext;
 
 class FigureController extends Controller
 {
    
-    public function showAction(Request $request, $slug)
+    public function afficherAction(Request $request, $slug)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -57,18 +58,31 @@ class FigureController extends Controller
 
 
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        $request = Request::createFromGlobals();
+        $context = new RequestContext($_SERVER['REQUEST_URI']);
+        $context->fromRequest($request);
+
+        //$comment->setComment('Bonjour est ce que ça marche ?');
         
         $comment = new Comment($Figure);
-        $comment->setUser($user);
-        //$comment->setComment('Bonjour est ce que ça marche ?');
-        $Figure->addComment($comment);
-
         $form = $this->createForm(CommentType::class, $comment);
 
-        if ($form->isValid()) {
+        $comment->setUser($user);
+
+        if (isset($_GET['st_platformbundle_comment'])){
+        $get_comment = $_GET['st_platformbundle_comment'];
+        $commentaire_get = $get_comment['comment'];
+
+          $comment->setComment($commentaire_get);
           $em = $this->getDoctrine()->getManager();
           $em->persist($comment);
           $em->flush();
+
+        return $this->redirectToRoute('st_platform_figure', array('slug' => $Figure->getSlug()));
+      }
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
         }
 
      
@@ -90,8 +104,6 @@ class FigureController extends Controller
             
         ));
         }
-    
-
 
 
 

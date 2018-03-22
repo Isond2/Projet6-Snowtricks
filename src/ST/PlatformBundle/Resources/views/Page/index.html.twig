@@ -6,7 +6,13 @@
     {% for figure in figure %}
 <div class="figure_index">
 
-
+         {% for image in figure.image|slice(0,1) %}
+        <div>
+        <img class="figure_show_img" src="{{ asset(image.webPath) }}"
+            alt="{{ image.alt }}" height="100"/>
+        </div>
+        {% endfor %}
+<div class="margin_texte_index">
     	<a href="{{ path('st_platform_figure', { 'slug': figure.slug }) }}"><span class="titre_figure">{{ figure.nom|title }}</span></a>
 
     		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -19,7 +25,7 @@
 			{% endif %}
 
     	<p>{{ figure.description(100) }}</p>
-    
+</div>
 </div>
     {% else %}
 

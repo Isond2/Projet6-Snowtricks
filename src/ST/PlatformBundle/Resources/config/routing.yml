@@ -3,12 +3,10 @@ st_platform_homepage:
     defaults: { _controller: STPlatformBundle:Page:index }
 
 st_platform_figure:
-    path:  /show/{slug}
-    defaults: { _controller: STPlatformBundle:Figure:show }
-    requirements:
-        
-        _method:  GET
-        
+    path:  /afficher/{slug}
+    defaults:
+        _controller: STPlatformBundle:Figure:afficher
+        methods: [POST]
 
 st_platform_add:
     path:      /add
