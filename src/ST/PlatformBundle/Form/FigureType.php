@@ -24,7 +24,7 @@ class FigureType extends AbstractType
         ->add('groupe', ChoiceType::class, array(
             'choices'  => array(
             'Facile' => 'Facile',
-            'Normal' => 'Normal',
+            'Moyenne' => 'Moyenne',
             'Difficile' => 'Difficile',
             'Extreme' => 'Extreme')))
 
