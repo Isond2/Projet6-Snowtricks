@@ -17,7 +17,9 @@
 /*css bandeau haut/header (Snowtricks titre)*/
 #header
 {
-height: 160px;
+z-index: 999;
+margin-top: -30px;
+height: 190px;
 background-color: #70D8FA;
 display: flex;
 flex-direction: column;
