@@ -1,6 +1,6 @@
-{% extends 'STPlatformBundle:Page:layout.html.twig' %}
+{% extends 'STPlatformBundle:Index:layout.html.twig' %}
 
-{% block title %}{{ Figure.nom }}{% endblock %}
+{% block title %}{{ trick.nom }}{% endblock %}
 
 {% block body %}
 <div class="container figure_show">
@@ -8,30 +8,30 @@
         <div class="figure_show_center">
 
             <header class="display-3 figure_show_titre">
-               {{ Figure.nom | upper }}
+               {{ trick.nom | upper }}
             </header>
 
             <div class="display-4">
-                Difficulté : {{ Figure.groupe }}
+                Difficulté : {{ trick.groupe }}
             </div>
 
             <div class="figure_show_description">
-                {{ Figure.description }}
+                {{ trick.description }}
             </div>
 
-        {% for image in Figure.image %}
+        {% for image in trick.image %}
         <div>
         <img class="figure_show_img" src="{{ asset(image.webPath) }}"
             alt="{{ image.alt }}" height="475"/>
         </div>
         {% endfor %}
-           
 
-        
+
+
         <div class="figure_show_center">
-            
-            {{ videaaao|raw }}
-            
+
+            {{ videos|raw }}
+
         </div>
     </article>
 </div>
@@ -43,11 +43,12 @@
         <h3>Espace commentaires</h3>
 
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <form>
+
     <div>
-    {% include 'STPlatformBundle:Comment:form.html.twig' with { 'form': form } %}
+    {{ form(form) }}
     </div>
-</form>
+
+
         {% else %}
             <p> <a href={{ path('fos_user_security_login')}}> Connectez vous</a> pour pouvoir ajouter un commentaire !</p>
         {% endif %}
@@ -82,5 +83,5 @@
 {% block sidebar %}
 {% endblock %}
 
-    
+
 {% endblock %}

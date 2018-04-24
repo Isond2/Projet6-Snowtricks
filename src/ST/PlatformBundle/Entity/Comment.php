@@ -1,22 +1,29 @@
 <?php
 
+/*
+ * This file is part of the Snowtricks community website.
+ *
+ * GOMEZ José-Adrian j.gomez17@hotmail.fr
+ *
+ */
+
 namespace ST\PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
 
 /**
  * Comment
  *
  * @ORM\Table(name="comment")
  * @ORM\Entity(repositoryClass="ST\PlatformBundle\Repository\CommentRepository")
- * @ORM\HasLifecycleCallbacks() 
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 
 class Comment
 {
+
     /**
      * @var int
      *
@@ -27,45 +34,46 @@ class Comment
     protected $id;
 
      /**
-     * @ORM\ManyToOne(targetEntity="STU\UserBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
-     */
+      * @ORM\ManyToOne(targetEntity="STU\UserBundle\Entity\User")
+      * @ORM\JoinColumn(nullable=false)
+      */
     private $user;
-
 
     /**
      * @ORM\Column(type="text")
      */
     protected $comment;
 
-    
     /**
      * @ORM\Column(type="boolean")
      */
     protected $approved;
 
     /**
-     *   
-     * @ORM\ManyToOne(targetEntity="ST\PlatformBundle\Entity\Figure", inversedBy="comments")
-     * @ORM\JoinColumn(name="figure_id", referencedColumnName="id", onDelete="CASCADE")
+     *
+     * @ORM\ManyToOne(targetEntity="ST\PlatformBundle\Entity\Trick", inversedBy="comments")
+     * @ORM\JoinColumn(name="trick_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    protected $figure;
+    protected $trick;
 
     /**
      * @ORM\Column(type="datetime")
      */
     protected $created;
 
-
-
-        public function __construct(\ST\PlatformBundle\Entity\Figure $figure = null)
+    /**
+    * Set trick , datetime and approved=true
+    *
+    * @param trick $trick
+    */
+    public function __construct(\ST\PlatformBundle\Entity\Trick $trick = null)
     {
-        $this->figure = $figure;        
+        $this->trick = $trick;
         $this->setCreated(new \DateTime());
         $this->setApproved(true);
-        return $this;
-    }
 
+        return $this;
+    }//end __construct()
 
 
     /**
@@ -76,7 +84,8 @@ class Comment
     public function getId()
     {
         return $this->id;
-    }
+    }//end getId()
+
 
     /**
      * Set user
@@ -90,7 +99,8 @@ class Comment
         $this->user = $user;
 
         return $this;
-    }
+    }//end setUser()
+
 
     /**
      * Get user
@@ -100,7 +110,8 @@ class Comment
     public function getUser()
     {
         return $this->user;
-    }
+    }//end getUser()
+
 
     /**
      * Set comment
@@ -114,7 +125,8 @@ class Comment
         $this->comment = $comment;
 
         return $this;
-    }
+    }//end setComment()
+
 
     /**
      * Get comment
@@ -124,7 +136,8 @@ class Comment
     public function getComment()
     {
         return $this->comment;
-    }
+    }//end getComment()
+
 
     /**
      * Set approved
@@ -138,7 +151,8 @@ class Comment
         $this->approved = $approved;
 
         return $this;
-    }
+    }//end setApproved()
+
 
     /**
      * Get approved
@@ -148,7 +162,8 @@ class Comment
     public function getApproved()
     {
         return $this->approved;
-    }
+    }//end getApproved()
+
 
     /**
      * Set created
@@ -162,7 +177,8 @@ class Comment
         $this->created = $created;
 
         return $this;
-    }
+    }//end setCreated()
+
 
     /**
      * Get created
@@ -172,33 +188,31 @@ class Comment
     public function getCreated()
     {
         return $this->created;
-    }
-
+    }//end getCreated()
 
 
     /**
-     * Set figure
+     * Set trick
      *
-     * @param \ST\PlatformBundle\Entity\Figure $figure
+     * @param \ST\PlatformBundle\Entity\Trick $trick
      *
      * @return Video
      */
-    public function setFigure(\ST\PlatformBundle\Entity\Figure $figure = null)
+    public function setTrick(\ST\PlatformBundle\Entity\Trick $trick = null)
     {
-        $this->figure = $figure;
+        $this->trick = $trick;
 
         return $this;
-    }
+    }//end setTrick()
+
 
     /**
-     * Get figure
+     * Get trick
      *
-     * @return \ST\PlatformBundle\Entity\Figure
+     * @return \ST\PlatformBundle\Entity\Trick
      */
-    public function getFigure()
+    public function getTrick()
     {
-        return $this->figure;
-    }
-
-}
-
+        return $this->trick;
+    }//end getTrick()
+}//end class

@@ -1,0 +1,24 @@
+{% extends '::base.html.twig' %}
+
+
+{% block body %}
+<div class="container text_align_center">
+  <h2>Supprimer une figure</h2>
+
+  <p>
+    Etes-vous certain de vouloir supprimer la figure "{{ trick.nom }}" ?
+  </p>
+
+
+  <form action="{{ path('st_platform_supp', {'id': trick.id}) }}" method="post">
+    <a href="{{ path('st_platform_trick', {'slug': trick.slug}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à l'annonce
+    </a>
+
+    <input type="submit" value="Supprimer" class="btn btn-danger" />
+
+    {{ form_rest(form) }}
+  </form>
+</div>
+{% endblock %}

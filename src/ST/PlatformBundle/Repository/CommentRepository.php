@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the Snowtricks community website.
+ *
+ * GOMEZ José-Adrian j.gomez17@hotmail.fr
+ *
+ */
+
 namespace ST\PlatformBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
@@ -12,19 +19,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommentRepository extends EntityRepository
 {
-    public function getCommentsForFigure($FigureId, $approved = true)
+
+    /**
+    * Get all the comments of one tricks
+    *
+    * @param trickId  $trickId
+    * @param approved $approved
+    *
+    * @return Comments
+    */
+    public function getCommentsForTrick($trickId, $approved = true)
     {
-        $qb = $this->createQueryBuilder('c')
-                   ->select('c')
-                   ->where('c.figure = :figure_id')
-                   ->addOrderBy('c.created')
-                   ->setParameter('figure_id', $FigureId);
+        $qb = $this->createQueryBuilder('c')->select('c')->where('c.trick = :trick_id')
+        ->addOrderBy('c.created')->setParameter('trick_id', $trickId);
 
-        if (false === is_null($approved))
-            $qb->andWhere('c.approved = :approved')
-               ->setParameter('approved', $approved);
+        if (false === is_null($approved)) {
+            $qb->andWhere('c.approved = :approved')->setParameter('approved', $approved);
+        }
 
-        return $qb->getQuery()
-                  ->getResult();
-    }
-}
+        return $qb->getQuery()->getResult();
+    }//end getCommentsForTrick()
+}//end class

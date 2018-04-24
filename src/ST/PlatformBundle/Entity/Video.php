@@ -1,10 +1,15 @@
 <?php
 
+/*
+ * This file is part of the Snowtricks community website.
+ *
+ * GOMEZ José-Adrian j.gomez17@hotmail.fr
+ *
+ */
+
 namespace ST\PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
-
 
 /**
  * Video
@@ -17,6 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 class Video
 {
+
     /**
      * @var int
      *
@@ -34,13 +40,13 @@ class Video
     protected $url;
 
     /**
-     *   
-     * @ORM\ManyToOne(targetEntity="ST\PlatformBundle\Entity\Figure", inversedBy="video")
-     * @ORM\JoinColumn(name="figure_id", referencedColumnName="id", onDelete="CASCADE")
+     *
+     * @ORM\ManyToOne(targetEntity="ST\PlatformBundle\Entity\Trick", inversedBy="video")
+     * @ORM\JoinColumn(name="trick_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    protected $figure;
+    protected $trick;
 
-    
+
     /**
      * Get id
      *
@@ -49,32 +55,33 @@ class Video
     public function getId()
     {
         return $this->id;
-    }
+    }//end getId()
+
 
     /**
-     * Set figure
+     * Set trick
      *
-     * @param \ST\PlatformBundle\Entity\Figure $figure
+     * @param \ST\PlatformBundle\Entity\Trick $trick
      *
      * @return Video
      */
-    public function setFigure(\ST\PlatformBundle\Entity\Figure $figure = null)
+    public function setTrick(\ST\PlatformBundle\Entity\Trick $trick = null)
     {
-        $this->figure = $figure;
+        $this->trick = $trick;
 
         return $this;
-    }
+    }//end setTrick()
+
 
     /**
-     * Get figure
+     * Get trick
      *
-     * @return \ST\PlatformBundle\Entity\Figure
+     * @return \ST\PlatformBundle\Entity\Trick
      */
-    public function getFigure()
+    public function getTrick()
     {
-        return $this->figure;
-    }
-
+        return $this->trick;
+    }//end getTrick()
 
 
     /**
@@ -89,7 +96,8 @@ class Video
         $this->url = $url;
 
         return $this;
-    }
+    }//end setUrl()
+
 
     /**
      * Get url
@@ -99,6 +107,5 @@ class Video
     public function getUrl()
     {
         return $this->url;
-    }
-
-}
+    }//end getUrl()
+}//end class

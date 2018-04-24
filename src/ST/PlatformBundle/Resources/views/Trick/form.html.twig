@@ -3,8 +3,8 @@
 
 <div class="container">
 
-<h3>Modifier une figure</h3>
-  {{ form_start(form) }}
+    <h3>Modifier une figure</h3>
+    {{ form_start(form) }}
 
     {% form_theme form 'jquery.collection.html.twig' %}
 
@@ -29,27 +29,27 @@
 
 
 
-<div class="row">
+    <div class="row">
 
         <div class="col-lg-6 col-sm-6 align">
-            {% for image in Figure.image %}
+            {% for image in trick.image %}
             <div>
-            <img class="figure_show_img" src="{{ asset(image.webPath) }}"
+                <img class="figure_show_img" src="{{ asset(image.webPath) }}"
                 alt="{{ image.alt }}" height="80"/>
             </div>
-            {% endfor %} 
+                {% endfor %}
         </div>
 
         <div class="col-lg-6 col-sm-6 marge">
 
                 {{ form_row(form.image) }}
-                        
+
 
         </div>
-</div>
+    </div>
 
 
- 
+
 
 
 
@@ -58,7 +58,7 @@
             {{ form_widget(form.video) }}
     </div>
 
-    
+
 
 
 
@@ -66,39 +66,24 @@
    	<div class="display_none">{{ form_rest(form) }}</div>
 
 
-	</div>
+</div>
 
 
-     <script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
-    <script src="{{ asset('js/jquery.collection.js') }}"></script>
+<script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+<script src="{{ asset('js/jquery.collection.js') }}"></script>
 
-    <script type="text/javascript">
-    $('.my-selector').collection({
-            add_at_the_end: true,
-            min: 1,
-            max: 10,
-            allow_up: false,
-            allow_down: false,
-            add: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span></a>',
-            remove: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a>',
-        });
-    </script>
+<script type="text/javascript">
+$('.my-selector').collection({
+        add_at_the_end: true,
+        min: 1,
+        max: 10,
+        allow_up: false,
+        allow_down: false,
+        add: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span></a>',
+        remove: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a>',
+});
+</script>
 
 
 {% endblock %}
 
-
-{# {{ path('videoDelete'/{ 'id': idf }/{ 'vid_id': video.id }) }} #}
-
-
-{#  {% for image in Figure.image %}
-        <div>
-        <img class="figure_show_img" src="{{ asset(image.webPath) }}"
-            alt="{{ image.alt }}" height="100"/>
-        </div>
-        {% endfor %} 
-st_platformbundle_figure_image
-
-        #}
-
-        

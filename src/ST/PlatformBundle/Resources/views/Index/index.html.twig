@@ -1,0 +1,38 @@
+{% extends 'STPlatformBundle:Index:layout.html.twig' %}
+
+{% block body %}
+
+
+    {% for trick in trick %}
+<div class="figure_index">
+
+         {% for image in trick.image|slice(0,1) %}
+        <div>
+        <img class="figure_show_img" src="{{ asset(image.webPath) }}"
+            alt="{{ image.alt }}" height="100"/>
+        </div>
+        {% endfor %}
+<div class="margin_texte_index">
+    	<a href="{{ path('st_platform_trick', { 'slug': trick.slug }) }}"><span class="titre_figure">{{ trick.nom|title }}</span></a>
+
+    		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+    	<a href="{{ path('st_platform_edit', { 'id': trick.id }) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="bottom" title="Modifier la figure."><span class="glyphicon glyphicon-pencil"></span></a>
+
+    	<a href="{{ path('st_platform_supp', { 'id': trick.id }) }}" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="bottom" title="Supprimer la figure."><span class="glyphicon glyphicon-trash"></span></a>
+
+    		{% else %}
+			{% endif %}
+
+    	<p>{{ trick.description(100) }}</p>
+</div>
+</div>
+    {% else %}
+
+
+
+        <p>Le site ne contien encore aucune figure <i class="em em-frowning"></i></p>
+
+    {% endfor %}
+
+{% endblock %}

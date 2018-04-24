@@ -5,3 +5,7 @@ services:
 # Fixtures services
     ST\PlatformBundle\DataFixtures\ORM\AppFixture:
         tags: [doctrine.fixture.orm]
+    st_platform.videoConverter:
+      class: ST\PlatformBundle\Services\VideoConverter
+    st_platform.EditMedia:
+      class: ST\PlatformBundle\Services\EditMedia

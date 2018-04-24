@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the Snowtricks community website.
+ *
+ * GOMEZ José-Adrian j.gomez17@hotmail.fr
+ *
+ */
+
 namespace STU\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -12,15 +19,15 @@ use ST\PlatformBundle\Entity\Avatar;
  */
 class User extends BaseUser
 {
-  /** 
+  /**
    * @ORM\Column(name="id", type="integer")
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+    protected $id;
 
     /**
-  	* @ORM\OneToOne(targetEntity="ST\PlatformBundle\Entity\Avatar", cascade={"persist", "remove"})
+    * @ORM\OneToOne(targetEntity="ST\PlatformBundle\Entity\Avatar", cascade={"persist", "remove"})
     */
     private $avatar;
 

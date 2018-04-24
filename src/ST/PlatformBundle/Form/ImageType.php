@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * This file is part of the Snowtricks community website.
+ *
+ * GOMEZ José-Adrian j.gomez17@hotmail.fr
+ *
+ */
+
 namespace ST\PlatformBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -7,19 +15,32 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Comur\ImageBundle\Form\Type\CroppableImageType;
 
+/**
+* Form for image
+*/
 class ImageType extends AbstractType
 {
-  public function buildForm(FormBuilderInterface $builder, array $options)
-  {
-    $builder
-      ->add('file', FileType::class, array('label'=>'Image :'))
-    ;
-  }
 
-   public function configureOptions(OptionsResolver $resolver)
-  {
-    $resolver->setDefaults(array(
-      'data_class' => 'ST\PlatformBundle\Entity\Image'
-    ));
-  }
-}
+    /**
+    * Build Form
+    *
+    * @param builder $builder
+    * @param options $options
+    */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('file', FileType::class, ['label' => 'Image :']);
+    }//end buildForm()
+
+    /**
+    * Configure Options
+    *
+    * @param resolver $resolver
+    */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            ['data_class' => 'ST\PlatformBundle\Entity\Image']
+        );
+    }//end configureOptions()
+}//end class

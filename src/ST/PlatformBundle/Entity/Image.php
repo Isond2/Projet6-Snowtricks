@@ -1,10 +1,16 @@
 <?php
 
+/*
+ * This file is part of the Snowtricks community website.
+ *
+ * GOMEZ José-Adrian j.gomez17@hotmail.fr
+ *
+ */
+
 namespace ST\PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 
 /**
  * @ORM\Table(name="st_image")
@@ -13,191 +19,231 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Image
 {
-  /**
-   * @ORM\Column(name="id", type="integer")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
-  private $id;
-  /**
-   * @ORM\Column(name="url", type="string", length=255)
-   */
-  private $url;
-  /**
-   * @ORM\Column(name="alt", type="string", length=255)
-   */
-  private $alt;
-  /**
-   * @var UploadedFile
-   */
-  private $file;
-  // On ajoute cet attribut pour y stocker le nom du fichier temporairement
-  private $tempFilename;
-
-  /**
-    *   
-    * @ORM\ManyToOne(targetEntity="ST\PlatformBundle\Entity\Figure", inversedBy="image")
-    * @ORM\JoinColumn(name="figure_id", referencedColumnName="id", onDelete="CASCADE")
-    */
-  protected $figure;
-
-
-
-
-  /**
-   * @ORM\PrePersist()
-   * @ORM\PreUpdate()
-   */
-  public function preUpload()
-  {
-    // Si jamais il n'y a pas de fichier (champ facultatif), on ne fait rien
-    if (null === $this->file) {
-      return;
-    }
-    // Le nom du fichier est son id, on doit juste stocker également son extension
-    // Pour faire propre, on devrait renommer cet attribut en « extension », plutôt que « url »
-    $this->url = $this->file->guessExtension();
-    // Et on génère l'attribut alt de la balise <img>, à la valeur du nom du fichier sur le PC de l'internaute
-    $this->alt = $this->file->getClientOriginalName();
-  }
-  /**
-   * @ORM\PostPersist()
-   * @ORM\PostUpdate()
-   */
-  public function upload()
-  {
-    // Si jamais il n'y a pas de fichier (champ facultatif), on ne fait rien
-    if (null === $this->file) {
-      return;
-    }
-    // Si on avait un ancien fichier (attribut tempFilename non null), on le supprime
-    if (null !== $this->tempFilename) {
-      $oldFile = $this->getUploadRootDir().'/'.$this->id.'.'.$this->tempFilename;
-      if (file_exists($oldFile)) {
-        unlink($oldFile);
-      }
-    }
-    // On déplace le fichier envoyé dans le répertoire de notre choix
-    $this->file->move(
-      $this->getUploadRootDir(), // Le répertoire de destination
-      $this->id.'.'.$this->url   // Le nom du fichier à créer, ici « id.extension »
-    );
-  }
-  /**
-   * @ORM\PreRemove()
-   */
-  public function preRemoveUpload()
-  {
-    // On sauvegarde temporairement le nom du fichier, car il dépend de l'id
-    $this->tempFilename = $this->getUploadRootDir().'/'.$this->id.'.'.$this->url;
-  }
-  /**
-   * @ORM\PostRemove()
-   */
-  public function removeUpload()
-  {
-    // En PostRemove, on n'a pas accès à l'id, on utilise notre nom sauvegardé
-    if (file_exists($this->tempFilename)) {
-      // On supprime le fichier
-      unlink($this->tempFilename);
-    }
-  }
-  public function getUploadDir()
-  {
-    // On retourne le chemin relatif vers l'image pour un navigateur (relatif au répertoire /web donc)
-    return 'uploads/img';
-  }
-  protected function getUploadRootDir()
-  {
-    // On retourne le chemin relatif vers l'image pour notre code PHP
-    return __DIR__.'/../../../../web/'.$this->getUploadDir();
-  }
-  public function getWebPath()
-  {
-    return $this->getUploadDir().'/'.$this->getId().'.'.$this->getUrl();
-  }
-  /**
-   * @return int
-   */
-  public function getId()
-  {
-    return $this->id;
-  }
-  /**
-   * @param string $url
-   */
-  public function setUrl($url)
-  {
-    $this->url = $url;
-  }
-  /**
-   * @return string
-   */
-  public function getUrl()
-  {
-    return $this->url;
-  }
-  /**
-   * @param string $alt
-   */
-  public function setAlt($alt)
-  {
-    $this->alt = $alt;
-  }
-  /**
-   * @return string
-   */
-  public function getAlt()
-  {
-    return $this->alt;
-  }
-  /**
-   * @return UploadedFile
-   */
-  public function getFile()
-  {
-    return $this->file;
-  }
-  /**
-   * @param UploadedFile $file
-   */
-  // On modifie le setter de File, pour prendre en compte l'upload d'un fichier lorsqu'il en existe déjà un autre
-  public function setFile(UploadedFile $file)
-  {
-    $this->file = $file;
-    // On vérifie si on avait déjà un fichier pour cette entité
-    if (null !== $this->url) {
-      // On sauvegarde l'extension du fichier pour le supprimer plus tard
-      $this->tempFilename = $this->url;
-      // On réinitialise les valeurs des attributs url et alt
-      $this->url = null;
-      $this->alt = null;
-    }
-  }
-
-      /**
-     * Set figure
-     *
-     * @param \ST\PlatformBundle\Entity\Figure $figure
-     *
-     * @return Image
-     */
-    public function setFigure(\ST\PlatformBundle\Entity\Figure $figure = null)
-    {
-        $this->figure = $figure;
-
-        return $this;
-    }
 
     /**
-     * Get figure
      *
-     * @return \ST\PlatformBundle\Entity\Figure
+     * @ORM\ManyToOne(targetEntity="ST\PlatformBundle\Entity\Trick", inversedBy="image")
+     * @ORM\JoinColumn(name="trick_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    public function getFigure()
+    protected $trick;
+
+    /**
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(name="url", type="string", length=255)
+     */
+    private $url;
+
+    /**
+     * @ORM\Column(name="alt", type="string", length=255)
+     */
+    private $alt;
+
+    /**
+     * @var UploadedFile
+     */
+    private $file;
+
+    // On ajoute cet attribut pour y stocker le nom du fichier temporairement
+    private $tempFilename;
+
+
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
     {
-        return $this->figure;
-    }
+
+        if (null === $this->file) {
+            return;
+        }
 
 
-}
+        $this->url = $this->file->guessExtension();
+
+        $this->alt = $this->file->getClientOriginalName();
+    }//end preUpload()
+
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+
+        if (null === $this->file) {
+            return;
+        }
+
+
+        if (null !== $this->tempFilename) {
+            $oldFile = $this->getUploadRootDir().'/'.$this->id.'.'.$this->tempFilename;
+            if (file_exists($oldFile)) {
+                unlink($oldFile);
+            }
+        }
+
+
+        $this->file->move(
+            $this->getUploadRootDir(),
+            $this->id.'.'.$this->url
+        );
+    }//end upload()
+
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function preRemoveUpload()
+    {
+
+        $this->tempFilename = $this->getUploadRootDir().'/'.$this->id.'.'.$this->url;
+    }//end preRemoveUpload()
+
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+
+        if (file_exists($this->tempFilename)) {
+            unlink($this->tempFilename);
+        }
+    }//end removeUpload()
+
+    /**
+    * getUploadDir
+    *
+    * @return uploads/img
+    */
+    public function getUploadDir()
+    {
+        return 'uploads/img';
+    }//end getUploadDir()
+
+    /**
+    * getWebPath
+    *
+    * @return $this
+    */
+    public function getWebPath()
+    {
+        return $this->getUploadDir().'/'.$this->getId().'.'.$this->getUrl();
+    }//end getWebPath()
+
+
+    /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }//end getId()
+
+
+    /**
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }//end setUrl()
+
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }//end getUrl()
+
+
+    /**
+     * @param string $alt
+     */
+    public function setAlt($alt)
+    {
+        $this->alt = $alt;
+    }//end setAlt()
+
+
+    /**
+     * @return string
+     */
+    public function getAlt()
+    {
+        return $this->alt;
+    }//end getAlt()
+
+
+    /**
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }//end getFile()
+
+
+    /**
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file)
+    {
+        $this->file = $file;
+        // On vérifie si on avait déjà un fichier pour cette entité
+        if (null !== $this->url) {
+            // On sauvegarde l'extension du fichier pour le supprimer plus tard
+            $this->tempFilename = $this->url;
+            // On réinitialise les valeurs des attributs url et alt
+            $this->url = null;
+            $this->alt = null;
+        }
+    }//end setFile()
+
+
+      /**
+       * Set trick
+       *
+       * @param \ST\PlatformBundle\Entity\Trick $trick
+       *
+       * @return Image
+       */
+    public function setTrick(\ST\PlatformBundle\Entity\Trick $trick = null)
+    {
+        $this->trick = $trick;
+
+        return $this;
+    }//end setTrick()
+
+
+    /**
+     * Get trick
+     *
+     * @return \ST\PlatformBundle\Entity\trick
+     */
+    public function getTrick()
+    {
+        return $this->trick;
+    }//end getTrick()
+
+    /**
+    * getUploadRootDir
+    *
+    * @return __DIR__
+    */
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }//end getUploadRootDir()
+}//end class

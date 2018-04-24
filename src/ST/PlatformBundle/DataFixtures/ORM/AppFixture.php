@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the Snowtricks community website.
+ *
+ * GOMEZ José-Adrian j.gomez17@hotmail.fr
+ *
+ */
+
 namespace ST\PlatformBundle\DataFixtures\ORM;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -13,26 +20,32 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-
+/**
+* Tricks Fixtures
+*/
 class AppFixture extends AbstractFixture implements OrderedFixtureInterface
 {
+
+    /**
+    * Load
+    *
+    * @param manager $manager
+    */
     public function load(ObjectManager $manager)
     {
-
-
-        //FIGURE 1 
+        // FIGURE 1
         $video1 = new Video();
         $video1->setUrl('https://www.youtube.com/watch?v=URFnYGzu9lU');
         $manager->persist($video1);
 
-        $src1 = __DIR__."/../../../../../web/uploads/fix/1.jpg";
+        $src1  = __DIR__.'/../../../../../web/uploads/fix/1.jpg';
         $file1 = new UploadedFile(
             $src1,
             '1.jpg',
             '',
             filesize($src1),
             null,
-            true 
+            true
         );
 
         $image1 = new Image();
@@ -48,43 +61,36 @@ class AppFixture extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('figure-1', $figure1);
         $manager->persist($figure1);
 
-
-
-
-
-
-
-        //FIGURE 2
+        // FIGURE 2
         $video2 = new Video();
         $video2->setUrl('https://www.youtube.com/watch?v=YQIvm_2ay-U');
         $manager->persist($video2);
 
-        $src2 = __DIR__."/../../../../../web/uploads/fix/2.jpg";
-        $file2 = new UploadedFile(
+        $src2   = __DIR__.'/../../../../../web/uploads/fix/2.jpg';
+        $file2  = new UploadedFile(
             $src2,
             '2.jpg',
             '',
             filesize($src2),
             null,
-            true 
+            true
         );
         $image2 = new Image();
         $image2->setFile($file2);
         $manager->persist($image2);
 
-        $src3 = __DIR__."/../../../../../web/uploads/fix/3.jpg";
-        $file3 = new UploadedFile(
+        $src3   = __DIR__.'/../../../../../web/uploads/fix/3.jpg';
+        $file3  = new UploadedFile(
             $src3,
             '3.jpg',
             '',
             filesize($src3),
             null,
-            true 
+            true
         );
         $image3 = new Image();
         $image3->setFile($file3);
         $manager->persist($image3);
-        
 
         $figure2 = new Figure();
         $figure2->setNom('Double Mc Twist 1260');
@@ -96,13 +102,7 @@ class AppFixture extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('figure-2', $figure2);
         $manager->persist($figure2);
 
-
-
-
-
-
-
-        //FIGURE 3 
+        // FIGURE 3
         $video3 = new Video();
         $video3->setUrl('https://www.youtube.com/watch?v=_2xJr3ylulQ');
         $manager->persist($video3);
@@ -111,14 +111,14 @@ class AppFixture extends AbstractFixture implements OrderedFixtureInterface
         $video4->setUrl('https://www.youtube.com/watch?v=hDSc7hQ0bzg');
         $manager->persist($video4);
 
-        $src4 = __DIR__."/../../../../../web/uploads/fix/4.jpg";
+        $src4  = __DIR__.'/../../../../../web/uploads/fix/4.jpg';
         $file4 = new UploadedFile(
             $src4,
             '4.jpg',
             '',
             filesize($src4),
             null,
-            true 
+            true
         );
 
         $image4 = new Image();
@@ -135,51 +135,45 @@ class AppFixture extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('figure-3', $figure3);
         $manager->persist($figure3);
 
-
-
-
-
-
-
-        //FIGURE 4
+        // FIGURE 4
         $video5 = new Video();
         $video5->setUrl('https://www.youtube.com/watch?v=BDpxekjUCqw');
         $manager->persist($video5);
 
-        $src5 = __DIR__."/../../../../../web/uploads/fix/5.jpg";
-        $file5 = new UploadedFile(
+        $src5   = __DIR__.'/../../../../../web/uploads/fix/5.jpg';
+        $file5  = new UploadedFile(
             $src5,
             '5.jpg',
             '',
             filesize($src5),
             null,
-            true 
+            true
         );
         $image5 = new Image();
         $image5->setFile($file5);
         $manager->persist($image5);
 
-        $src6 = __DIR__."/../../../../../web/uploads/fix/6.png";
-        $file6 = new UploadedFile(
+        $src6   = __DIR__.'/../../../../../web/uploads/fix/6.png';
+        $file6  = new UploadedFile(
             $src6,
             '6.png',
             '',
             filesize($src6),
             null,
-            true 
+            true
         );
         $image6 = new Image();
         $image6->setFile($file6);
         $manager->persist($image6);
 
-        $src7 = __DIR__."/../../../../../web/uploads/fix/7.jpg";
-        $file7 = new UploadedFile(
+        $src7   = __DIR__.'/../../../../../web/uploads/fix/7.jpg';
+        $file7  = new UploadedFile(
             $src7,
             '7.jpg',
             '',
             filesize($src7),
             null,
-            true 
+            true
         );
         $image7 = new Image();
         $image7->setFile($file7);
@@ -187,7 +181,8 @@ class AppFixture extends AbstractFixture implements OrderedFixtureInterface
 
         $figure4 = new Figure();
         $figure4->setNom('Ollie');
-        $figure4->setDescription('Le Ollie est une impulsion  avec déformation de la planche qui permet de faire un saut, comme un ollie de skate, mais en beaucoup plus facile car les deux pieds sont attachés sur la board.
+        $figure4->setDescription(
+            'Le Ollie est une impulsion  avec déformation de la planche qui permet de faire un saut, comme un ollie de skate, mais en beaucoup plus facile car les deux pieds sont attachés sur la board.
 
 Conseils pour réaliser à un ollie en snowboard.
 Le Ollie peut se décomposer en plusieurs phases :
@@ -200,7 +195,8 @@ Le Ollie peut se décomposer en plusieurs phases :
 
 4.  Pour atterrir, il faut légèrement détendre les jambes pour aller chercher le sol tout en préparant l\’amorti, c\’est à dire forcer sur les jambes qui servent d\’amortisseur. Bien plier les genoux sans se laisser assoir par la force de gravité.
 
-Le mieux c\’est de commencer à s\’entrainer à faire des ollies à plat sur la piste, puis en profitant des petits reliefs de bord de piste. Quand on se sent vraiment  à l\’aise, on peut commencer à essayer sur de plus gros sauts (kickers de snowpark par exemple). Ne pas hésiter à être créatif, repérer toute variation de terrain qui peut être un bon spot pour envoyer un ollie, et transformer la montagne en terrain de jeu…');
+Le mieux c\’est de commencer à s\’entrainer à faire des ollies à plat sur la piste, puis en profitant des petits reliefs de bord de piste. Quand on se sent vraiment  à l\’aise, on peut commencer à essayer sur de plus gros sauts (kickers de snowpark par exemple). Ne pas hésiter à être créatif, repérer toute variation de terrain qui peut être un bon spot pour envoyer un ollie, et transformer la montagne en terrain de jeu…'
+        );
         $figure4->setGroupe('Facile');
         $figure4->addImage($image5);
         $figure4->addImage($image6);
@@ -209,26 +205,19 @@ Le mieux c\’est de commencer à s\’entrainer à faire des ollies à plat sur
         $this->addReference('figure-4', $figure4);
         $manager->persist($figure4);
 
-
-
-
-
-
-
-
-        //FIGURE 5
+        // FIGURE 5
         $video6 = new Video();
         $video6->setUrl('https://www.youtube.com/watch?v=IrTjjLUc0jU');
         $manager->persist($video6);
 
-        $src8 = __DIR__."/../../../../../web/uploads/fix/8.jpg";
+        $src8  = __DIR__.'/../../../../../web/uploads/fix/8.jpg';
         $file8 = new UploadedFile(
             $src8,
             '8.jpg',
             '',
             filesize($src8),
             null,
-            true 
+            true
         );
 
         $image8 = new Image();
@@ -244,25 +233,19 @@ Le mieux c\’est de commencer à s\’entrainer à faire des ollies à plat sur
         $this->addReference('figure-5', $figure5);
         $manager->persist($figure5);
 
-
-
-
-
-
-
-        //FIGURE 6
+        // FIGURE 6
         $video7 = new Video();
         $video7->setUrl('https://www.youtube.com/watch?v=SFYYzy0UF-8');
         $manager->persist($video7);
 
-        $src9 = __DIR__."/../../../../../web/uploads/fix/9.jpg";
+        $src9  = __DIR__.'/../../../../../web/uploads/fix/9.jpg';
         $file9 = new UploadedFile(
             $src9,
             '9.jpg',
             '',
             filesize($src9),
             null,
-            true 
+            true
         );
 
         $image9 = new Image();
@@ -271,38 +254,27 @@ Le mieux c\’est de commencer à s\’entrainer à faire des ollies à plat sur
 
         $figure6 = new Figure();
         $figure6->setNom('Shred');
-        $figure6->setDescription('Ce qui est bien c’est qu’avec le shred,  c\'est qu\'on n\'a pas besoin de prendre trop de vitesse pour exécuter un trick et s’amuser, ça rend toujours une piste banale beaucoup plus fun sans prendre trop de risques.
+        $figure6->setDescription(
+            'Ce qui est bien c’est qu’avec le shred,  c\'est qu\'on n\'a pas besoin de prendre trop de vitesse pour exécuter un trick et s’amuser, ça rend toujours une piste banale beaucoup plus fun sans prendre trop de risques.
 
-Pour commencer et vraiment progresser en shred,  le mieux est de rider une petite board bien souple qui va se plier facilement et va permettre  d’apprendre et de progresser sur des tricks plus facilement avec plus de tolérance, spécialement avec les boards qui sont bien souples en torsion. Si on est à l’aise et que l’on sait bien plier sa board, on peut aussi faire tout ça avec une board plus ferme et performante, ça sera toujours plus polyvalent...');
+Pour commencer et vraiment progresser en shred,  le mieux est de rider une petite board bien souple qui va se plier facilement et va permettre  d’apprendre et de progresser sur des tricks plus facilement avec plus de tolérance, spécialement avec les boards qui sont bien souples en torsion. Si on est à l’aise et que l’on sait bien plier sa board, on peut aussi faire tout ça avec une board plus ferme et performante, ça sera toujours plus polyvalent...'
+        );
         $figure6->setGroupe('Moyenne');
         $figure6->addImage($image9);
         $figure6->addVideo($video7);
         $this->addReference('figure-6', $figure6);
         $manager->persist($figure6);
 
-
-
         $manager->flush();
-    
+    }//end load()
 
-    }
-
-
-
-       public function getOrder()
-        {
-            return 1;
-        }
-
-      
-    
-
-
-       
-}
-
-
-
-
-?>
-
+    /**
+    * getOrder
+    *
+    * @return 1
+    */
+    public function getOrder()
+    {
+         return 1;
+    }//end getOrder()
+}//end class
